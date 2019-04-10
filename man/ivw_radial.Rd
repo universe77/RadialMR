@@ -24,7 +24,7 @@ An object of class \code{"IVW"} containing the following components:\describe{
 \item{\code{data}}{A data frame containing containing SNP IDs, inverse variance weights, the product of the inverse variance weight and ratio estimate for each variant, contribution to overall heterogeneity with corresponding p-value, and a factor indicator showing outlier status.}
 \item{\code{confint}}{A vector giving lower and upper confidence limits for the radial IVW effect estimate.}
 \item{\code{it.coef}}{The estimated iterative coefficient, its standard error, t-statistic and corresponding (two-sided) p-value.}
-\item{\code{it.confint}}{A vector giving lower and upper confidence limits for the iterative radial IVW effect estimate.} 
+\item{\code{it.confint}}{A vector giving lower and upper confidence limits for the iterative radial IVW effect estimate.}
 \item{\code{fe.coef}}{The estimated fixed effect exact coefficient, its standard error, t-statistic and corresponding (two-sided) p-value.}
 \item{\code{fe.confint}}{A vector giving lower and upper confidence limits for the fixed effect exact radial IVW effect estimate.}
 \item{\code{re.coef}}{The estimated random effect exact coefficient, its standard error, t-statistic and corresponding (two-sided) p-value.}

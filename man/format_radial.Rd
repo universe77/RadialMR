@@ -4,7 +4,7 @@
 \alias{format_radial}
 \title{format_radial}
 \usage{
-format_radial(BXG, BYG, seBXG, seBYG, RSID)
+format_radial(BXG, BYG, seBXG, seBYG, ios1_mean, ios2_mean, RSID)
 }
 \arguments{
 \item{BXG}{A numeric vector of beta-coefficient values for genetic associations with the first variable (exposure).}

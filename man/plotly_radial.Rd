@@ -4,7 +4,7 @@
 \alias{plotly_radial}
 \title{plotly_radial}
 \usage{
-plotly_radial(r_object)
+plotly_radial(r_object, TEST)
 }
 \arguments{
 \item{r_object}{An object of class \code{"IVW"} or \code{"egger"}.}
