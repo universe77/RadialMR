@@ -20,7 +20,7 @@
 #Function for formatting data frame
 #external weight -> change the name
 
-format_radial<-function(ios = ios_dat, BXG, BYG, seBXG, seBYG, RSID){
+format_radial<-function(BXG, BYG, seBXG, seBYG, RSID, external_weight, external_RSID){
 
   #Generates placeholder SNP IDs if not provided.
 
@@ -35,20 +35,20 @@ format_radial<-function(ios = ios_dat, BXG, BYG, seBXG, seBYG, RSID){
   F.Data<-data.frame(RSID,BXG,BYG,seBXG,seBYG)
   names(F.Data) <- c("SNP", "beta.exposure", "beta.outcome", "se.exposure", "se.outcome")
 
-  I.Data <- data.frame(ios$SNP, ios$ios1_mean, ios$ios2_mean)
-  names(I.Data) <- c("SNP", "ios1.mean", "ios2.mean")
+  E.Data <- data.frame(external_RSID, external_weight)
+  names(E.Data) <- c("SNP", "weight.external")
 
-  if(length(F.Data$SNP) == length(I.Data$SNP)) {
+  if(length(F.Data$SNP) == length(E.Data$SNP)) {
 
-   temp <- merge(F.Data, I.Data, by = c("SNP"))
+   temp <- merge(F.Data, E.Data, by = c("SNP"))
 
   }
 
-  if(length(F.Data$SNP) != length(I.Data$SNP)) {
+  if(length(F.Data$SNP) != length(E.Data$SNP)) {
 
-  temp <- merge(F.Data, I.Data, by = c("SNP"), all.y = TRUE)
+  temp <- merge(F.Data, E.Data, by = c("SNP"), all.y = TRUE)
 
-  message("Removing the following SNPs for having missing values in IOS:\n", paste(F.Data$SNP[!(F.Data$SNP %in% I.Data$SNP)], collapse=", "))
+  message("Removing the following SNPs for having missing values in external weights:\n", paste(F.Data$SNP[!(F.Data$SNP %in% E.Data$SNP)], collapse=", "))
 
   }
 

@@ -32,7 +32,7 @@
 
 
 #remove argument for ios
-ivw_radial<-function(r_input,alpha,weights,tol, ios = c("ios1", "ios2")[1]){
+ivw_radial<-function(r_input,alpha,weights,tol, external_weight = FALSE){
 
   #Define ratio estimates
   Ratios<-r_input[,3]/r_input[,2]
@@ -58,16 +58,6 @@ ivw_radial<-function(r_input,alpha,weights,tol, ios = c("ios1", "ios2")[1]){
 
   summary<-TRUE
 
-  if(ios[1] == "ios1"){
-    ios <- (1 / r_input[, 6])
-    ios <- ios / sum(ios) * length(ios)
-  }
-
-  if(ios[1] == "ios2"){
-    ios <- (1 / r_input[, 7])
-    ios <- ios / sum(ios) * length(ios)
-  }
-
 
   if(weights==1){
 
@@ -90,23 +80,24 @@ ivw_radial<-function(r_input,alpha,weights,tol, ios = c("ios1", "ios2")[1]){
 
   }
 
-  if(weights == 4) {
-
-    W <- (ios * ((r_input[,2]^2) / (r_input[,5]^2)))
-
+  if(external_weight == FALSE & weights > 3) {
+    stop("No columns for external weight are detected")
   }
 
+  if(external_weight == TRUE) {
+    if(weights == 4) {
+    W <- (r_input[,6] * ((r_input[,2]^2) / (r_input[,5]^2)))
 
-  if(weights == 5) {
+    }
 
-     W <- (ios * ((r_input[,5]^2/r_input[,2]^2)+((r_input[,3]^2*r_input[,4]^2)/r_input[,2]^4))^-1)
-  }
+    if(weights == 5) {
+     W <- (r_input[,6] * ((r_input[,5]^2/r_input[,2]^2)+((r_input[,3]^2*r_input[,4]^2)/r_input[,2]^4))^-1)
+    }
 
-
-  if(weights == 6) {
-
+    if(weights == 6) {
     W <- ((r_input[,2]^2)/(r_input[,5]^2))
 
+    }
   }
 
 
@@ -181,7 +172,7 @@ ivw_radial<-function(r_input,alpha,weights,tol, ios = c("ios1", "ios2")[1]){
 
   if(weights==6){
     #Define inverse variance weights
-    W <-  ios * ((r_input[,5]^2+(IVW.Slope^2*r_input[,4]^2))/r_input[,2]^2)^-1
+    W <-  r_input[,6] * ((r_input[,5]^2+(IVW.Slope^2*r_input[,4]^2))/r_input[,2]^2)^-1
 
     #Define vector of squared weights
     Wj<-sqrt(W)
@@ -519,7 +510,19 @@ ivw_radial<-function(r_input,alpha,weights,tol, ios = c("ios1", "ios2")[1]){
 
     if(weights == 4) {
 
-      row.names(combined.dat)[1] <- "Effect (1st * IOS)"
+      row.names(combined.dat)[1] <- "Effect (1st * external weight)"
+
+    }
+
+    if(weights == 5) {
+
+      row.names(combined.dat)[1] <- "Effect (2nd * external weight)"
+
+    }
+
+    if(weights == 6) {
+
+      row.names(combined.dat)[1] <- "Effect (Mod.2nd * external weight)"
 
     }
 
@@ -548,7 +551,7 @@ ivw_radial<-function(r_input,alpha,weights,tol, ios = c("ios1", "ios2")[1]){
 
   }
 
-  out_data<-data.frame(r_input[,1],r_input[,8],r_input[,9],r_input[,10])
+  out_data<-data.frame(r_input[,1],r_input[,7],r_input[,8],r_input[,9])
   out_data$Wj<-Wj
   out_data$BetaWj<-BetaWj
   out_data<-out_data[c(1,5,6,2,3,4)]
