@@ -20,7 +20,7 @@
 #Function for formatting data frame
 #external weight -> change the name
 
-format_radial<-function(BXG, BYG, seBXG, seBYG, RSID, external_weight, external_RSID){
+format_radial<-function(BXG, BYG, seBXG, seBYG, RSID, external_weight = NULL, external_RSID = NULL){
 
   #Generates placeholder SNP IDs if not provided.
 
@@ -34,6 +34,10 @@ format_radial<-function(BXG, BYG, seBXG, seBYG, RSID, external_weight, external_
   #Rearrange variable order in formatted data frame
   F.Data<-data.frame(RSID,BXG,BYG,seBXG,seBYG)
   names(F.Data) <- c("SNP", "beta.exposure", "beta.outcome", "se.exposure", "se.outcome")
+
+  temp <- F.Data
+
+  if (!is.null(external_weight) & !is.null(external_RSID)){
 
   E.Data <- data.frame(external_RSID, external_weight)
   names(E.Data) <- c("SNP", "weight.external")
@@ -51,10 +55,8 @@ format_radial<-function(BXG, BYG, seBXG, seBYG, RSID, external_weight, external_
   message("Removing the following SNPs for having missing values in external weights:\n", paste(F.Data$SNP[!(F.Data$SNP %in% E.Data$SNP)], collapse=", "))
 
   }
-
-  #message - missing SNPs paste(d$SNP[d$remove], collapse=", "))
-
-  #Rename variables based on MRBase conventional names
+  }
 
   return(temp)
+
 }

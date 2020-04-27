@@ -58,6 +58,9 @@ ivw_radial<-function(r_input,alpha,weights,tol, external_weight = FALSE){
 
   summary<-TRUE
 
+  #Scale external weight
+  r_input[,6] <- r_input[,6] / sum(r_input[,6], na.rm=T) * sum(!is.na(r_input[,6]))
+
 
   if(weights==1){
 
