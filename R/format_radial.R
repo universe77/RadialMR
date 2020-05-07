@@ -50,7 +50,7 @@ format_radial<-function(BXG, BYG, seBXG, seBYG, RSID, external_weight = NULL, ex
 
   if(length(F.Data$SNP) != length(E.Data$SNP)) {
 
-  temp <- merge(F.Data, E.Data, by = c("SNP"), all.y = TRUE)
+  temp <- merge(F.Data, E.Data, by = c("SNP"), all.x = TRUE)
 
   message("Removing the following SNPs for having missing values in external weights:\n", paste(F.Data$SNP[!(F.Data$SNP %in% E.Data$SNP)], collapse=", "))
 
