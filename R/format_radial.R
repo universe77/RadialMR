@@ -8,6 +8,7 @@
 #' @param seBYG The standard errors corresponding to the beta-coefficients \code{BYG}.
 #' @param RSID A vector of names for genetic variants included in the analysis. If variant IDs are not provided (\code{RSID="NULL"}), a vector of ID numbers will be generated.
 #' @param external_weight An extra weight from external sources.
+#' @param external_RSID Names for genetic variants for the external weights.
 #' @return A formatted data frame.
 #'
 #'@author Wes Spiller; Jack Bowden.
