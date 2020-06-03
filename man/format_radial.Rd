@@ -4,7 +4,15 @@
 \alias{format_radial}
 \title{format_radial}
 \usage{
-format_radial(BXG, BYG, seBXG, seBYG, ios1_mean, ios2_mean, RSID)
+format_radial(
+  BXG,
+  BYG,
+  seBXG,
+  seBYG,
+  RSID,
+  external_weight = NULL,
+  external_RSID = NULL
+)
 }
 \arguments{
 \item{BXG}{A numeric vector of beta-coefficient values for genetic associations with the first variable (exposure).}
@@ -16,6 +24,10 @@ format_radial(BXG, BYG, seBXG, seBYG, ios1_mean, ios2_mean, RSID)
 \item{seBYG}{The standard errors corresponding to the beta-coefficients \code{BYG}.}
 
 \item{RSID}{A vector of names for genetic variants included in the analysis. If variant IDs are not provided (\code{RSID="NULL"}), a vector of ID numbers will be generated.}
+
+\item{external_weight}{An extra weight from external sources.}
+
+\item{external_RSID}{Names for genetic variants for the external weights.}
 }
 \value{
 A formatted data frame.

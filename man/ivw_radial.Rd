@@ -4,7 +4,7 @@
 \alias{ivw_radial}
 \title{ivw_radial}
 \usage{
-ivw_radial(r_input, alpha, weights, tol)
+ivw_radial(r_input, alpha, weights, tol, external_weight = FALSE)
 }
 \arguments{
 \item{r_input}{A formatted data frame using the \code{format_radial} function.}
