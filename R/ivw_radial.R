@@ -90,19 +90,19 @@ ivw_radial<-function(r_input,alpha,weights,tol, external_weight = FALSE){
     if(weights == 4) {
       W <-  (r_input[,2]^2) / (r_input[,5]^2)
       r_input[,6] <- (max(W) - min(W)) * (r_input[ ,6] - min(r_input[ ,6])) / (max(r_input[ ,6]) - min(r_input[ ,6])) + min(W)
-      W <- r_input[ , 6] * W
+      W <- (1/r_input[ , 6]) * W
     }
 
     if(weights == 5) {
      W <- (r_input[,5]^2/r_input[,2]^2) + ((r_input[,3]^2*r_input[,4]^2)/r_input[,2]^4)^-1
      r_input[,6] <- (max(W) - min(W)) * (r_input[ ,6] - min(r_input[ ,6])) / (max(r_input[ ,6]) - min(r_input[ ,6])) + min(W)
-     W <- r_input[ , 6] * W
+     W <- (1/r_input[ , 6]) * W
     }
 
     if(weights == 6) {
     W <- ((r_input[,2]^2)/(r_input[,5]^2))
     r_input[,6] <- (max(W) - min(W)) * (r_input[ ,6] - min(r_input[ ,6])) / (max(r_input[ ,6]) - min(r_input[ ,6])) + min(W)
-    W <- r_input[ , 6] * W
+    W <- (1/r_input[ , 6]) * W
     }
   }
 
@@ -180,7 +180,7 @@ ivw_radial<-function(r_input,alpha,weights,tol, external_weight = FALSE){
     #Define inverse variance weights
     W <-  ((r_input[,5]^2+(IVW.Slope^2*r_input[,4]^2))/r_input[,2]^2)^-1
     r_input[,6] <- (max(W) - min(W)) * (r_input[ ,6] - min(r_input[ ,6])) / (max(r_input[ ,6]) - min(r_input[ ,6])) + min(W)
-    W <- r_input[ , 6] * W
+    W <- (1/r_input[ , 6]) * W
 
     #Define vector of squared weights
     Wj<-sqrt(W)
