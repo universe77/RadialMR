@@ -90,15 +90,13 @@ ivw_radial<-function(r_input,alpha,weights,tol, external_weight = FALSE){
     if(weights == 4) {
       W <-  (r_input[,2]^2) / (r_input[,5]^2)
       r_input[ ,6] <- 1 / r_input[ ,6]
-      r_input[,6] <- (max(W) - min(W)) * (r_input[ ,6] - min(r_input[ ,6])) / (max(r_input[ ,6]) - min(r_input[ ,6])) + min(W)
-      W <- r_input[ , 6] * W
+      r_input[ ,6] <- (max(W) - min(W)) * (r_input[ ,6] - min(r_input[ ,6])) / (max(r_input[ ,6]) - min(r_input[ ,6])) + min(W)
     }
 
     if(weights == 5) {
      W <- (r_input[,5]^2/r_input[,2]^2) + ((r_input[,3]^2*r_input[,4]^2)/r_input[,2]^4)^-1
      r_input[ ,6] <- 1 / r_input[ ,6]
-     r_input[,6] <- (max(W) - min(W)) * (r_input[ ,6] - min(r_input[ ,6])) / (max(r_input[ ,6]) - min(r_input[ ,6])) + min(W)
-     W <- r_input[ , 6] * W
+     r_input[ ,6] <- (max(W) - min(W)) * (r_input[ ,6] - min(r_input[ ,6])) / (max(r_input[ ,6]) - min(r_input[ ,6])) + min(W)
     }
 
     if(weights == 6) {
@@ -109,6 +107,11 @@ ivw_radial<-function(r_input,alpha,weights,tol, external_weight = FALSE){
 
   #Define vector of squared weights
   Wj<-sqrt(W)
+
+  #Apply external weights
+  if(external_weight == TRUE & weights == 4 | 5) {
+    Wj <- Wj * r_input[ ,6]
+    }
 
   #Define vector of weights * ratio estimates
   BetaWj<-Ratios*Wj
@@ -176,15 +179,15 @@ ivw_radial<-function(r_input,alpha,weights,tol, external_weight = FALSE){
   }
 
 
-  if(weights==6){
+  if(external_weight == TRUE & weights == 6){
     #Define inverse variance weights
     W <-  ((r_input[,5]^2+(IVW.Slope^2*r_input[,4]^2))/r_input[,2]^2)^-1
     r_input[ ,6] <- 1 / r_input[ ,6]
-    r_input[,6] <- (max(W) - min(W)) * (r_input[ ,6] - min(r_input[ ,6])) / (max(r_input[ ,6]) - min(r_input[ ,6])) + min(W)
-    W <- r_input[ , 6] * W
+    r_input[ ,6] <- (max(W) - min(W)) * (r_input[ ,6] - min(r_input[ ,6])) / (max(r_input[ ,6]) - min(r_input[ ,6])) + min(W)
 
     #Define vector of squared weights
-    Wj<-sqrt(W)
+    Wj <- sqrt(W)
+    Wj <- Wj * r_input[ ,6]
 
     #Define vector of weights * ratio estimates
     BetaWj<-Ratios*Wj
