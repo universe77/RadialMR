@@ -82,23 +82,26 @@ ivw_radial<-function(r_input,alpha,weights,tol, external_weight = FALSE){
 
   if(external_weight == FALSE & weights > 3) {
     stop("No columns for external weight are detected")
+    scale_externelw <- function(W = W, external_weight = r_input[ ,6]){
+      sw <- sum(W)
+      extw <-  (1/external_weight) * W
+      #W <- (max(W) - min(W)) * (extw - min(extw)) / (max(extw) - min(extw)) + min(W)
+      scaledw <- extw / sum(extw) * sw
+      return(scaledw)
+    }
   }
 
   if(external_weight == TRUE) {
 
     #Scale external weight
     if(weights == 4) {
-      W <-  (r_input[,2]^2) / (r_input[,5]^2)
-      r_input[ ,6] <- 1 / r_input[ ,6]
-      r_input[ ,6] <- (max(W) - min(W)) * (r_input[ ,6] - min(r_input[ ,6])) / (max(r_input[ ,6]) - min(r_input[ ,6])) + min(W)
-      W <- r_input[ ,6] * W
+      W <- (r_input[,2]^2) / (r_input[,5]^2)
+      W <- scale_externelw(W = W, external_weight = r_input[ ,6])
     }
 
     if(weights == 5) {
      W <- (r_input[,5]^2/r_input[,2]^2) + ((r_input[,3]^2*r_input[,4]^2)/r_input[,2]^4)^-1
-     r_input[ ,6] <- 1 / r_input[ ,6]
-     r_input[ ,6] <- (max(W) - min(W)) * (r_input[ ,6] - min(r_input[ ,6])) / (max(r_input[ ,6]) - min(r_input[ ,6])) + min(W)
-     W <- r_input[ ,6] * W
+     W <- scale_externelw(W = W, external_weight = r_input[ ,6])
     }
 
     if(weights == 6) {
@@ -179,9 +182,7 @@ ivw_radial<-function(r_input,alpha,weights,tol, external_weight = FALSE){
   if(external_weight == TRUE & weights == 6){
     #Define inverse variance weights
     W <-  ((r_input[,5]^2+(IVW.Slope^2*r_input[,4]^2))/r_input[,2]^2)^-1
-    r_input[ ,6] <- 1 / r_input[ ,6]
-    r_input[ ,6] <- (max(W) - min(W)) * (r_input[ ,6] - min(r_input[ ,6])) / (max(r_input[ ,6]) - min(r_input[ ,6])) + min(W)
-    W <- r_input[ ,6] * W
+    W <- scale_externelw(W = W, external_weight = r_input[ ,6])
 
     #Define vector of squared weights
     Wj <- sqrt(W)
@@ -577,3 +578,7 @@ ivw_radial<-function(r_input,alpha,weights,tol, external_weight = FALSE){
 
 
 }
+
+
+
+
