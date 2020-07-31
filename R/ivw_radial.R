@@ -82,6 +82,10 @@ ivw_radial<-function(r_input,alpha,weights,tol, external_weight = FALSE){
 
   if(external_weight == FALSE & weights > 3) {
     stop("No columns for external weight are detected")
+    }
+
+  if(external_weight == TRUE) {
+    #Scale external weight
     scale_externelw <- function(W = W, external_weight = r_input[ ,6]){
       sw <- sum(W)
       extw <-  (1/external_weight) * W
@@ -89,11 +93,7 @@ ivw_radial<-function(r_input,alpha,weights,tol, external_weight = FALSE){
       scaledw <- extw / sum(extw) * sw
       return(scaledw)
     }
-  }
 
-  if(external_weight == TRUE) {
-
-    #Scale external weight
     if(weights == 4) {
       W <- (r_input[,2]^2) / (r_input[,5]^2)
       W <- scale_externelw(W = W, external_weight = r_input[ ,6])
