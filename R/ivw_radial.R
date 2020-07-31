@@ -561,7 +561,13 @@ ivw_radial<-function(r_input,alpha,weights,tol, external_weight = FALSE){
 
   }
 
-  out_data<-data.frame(r_input[,1],r_input[,7],r_input[,8],r_input[,9])
+  if(external_weight = FALSE){
+    out_data<-data.frame(r_input[,1],r_input[,6],r_input[,7],r_input[,8])
+  }
+
+  if(external_weight = TRUE){
+    out_data<-data.frame(r_input[,1],r_input[,7],r_input[,8],r_input[,9])
+  }
   out_data$Wj<-Wj
   out_data$BetaWj<-BetaWj
   out_data<-out_data[c(1,5,6,2,3,4)]
