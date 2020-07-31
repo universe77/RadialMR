@@ -89,8 +89,8 @@ ivw_radial<-function(r_input,alpha,weights,tol, external_weight = FALSE){
     scale_externelw <- function(W = W, external_weight = r_input[ ,6]){
       sw <- sum(W)
       extw <-  (1/external_weight) * W
-      #W <- (max(W) - min(W)) * (extw - min(extw)) / (max(extw) - min(extw)) + min(W)
-      scaledw <- extw / sum(extw) * sw
+      W <- (max(W) - min(W)) * (extw - min(extw)) / (max(extw) - min(extw)) + min(W)
+      scaledw <- W / sum(W) * sw
       return(scaledw)
     }
 
